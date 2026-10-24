@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Free TDS & GST Calculator | Sync GST</title>
+<!-- Load Tailwind CSS + Official Forms Plugin for perfect input boxes -->
+<script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    th { text-transform: uppercase; letter-spacing: 0.05em; }
+    .numeric { text-align: right; }
+    /* Hide number input arrows for cleaner look */
+    input[type=number]::-webkit-inner-spin-button, 
+    input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+</style>
+</head>
+<body class="bg-gray-50 text-gray-800 flex flex-col min-h-screen">
+
+    <!-- Global Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50 pdf-hide">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex-shrink-0 flex items-center cursor-pointer">
+                    <span class="text-2xl font-bold text-blue-600">Sync<span class="text-teal-500">GST</span></span>
+                </div>
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="index.html" class="text-gray-600 hover:text-blue-600 font-medium">Home</a>
+                    <a href="index.html#free-tools" class="text-blue-600 font-medium">Free Tools</a>
+                    <a href="pricing.html" class="text-gray-600 hover:text-blue-600 font-medium">Pricing</a>
+                    <a href="about-us.html" class="text-gray-600 hover:text-blue-600 font-medium">About Us</a>
+                    <a href="contact.html" class="text-gray-600 hover:text-blue-600 font-medium">Contact</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="App" class="text-blue-600 font-semibold hover:text-blue-800">Log in</a>
+                    <a href="App" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg font-medium transition-all shadow-md">Sign up for free</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <section class="bg-white border-b border-gray-200 pdf-hide">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 text-center md:text-left flex flex-col md:flex-row justify-between items-center">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-900 tracking-tight mb-2">TDS & GST Calculator</h1>
+                <p class="text-gray-500 text-lg">Calculate TDS deductions for Panchayat & Govt. Body contracts instantly.</p>
+            </div>
+            <div class="mt-4 md:mt-0">
+                <button onclick="downloadPDF()" class="bg-teal-500 hover:bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold shadow-md transition-all flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    Download PDF
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main App Container -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+        
+        <!-- Information Box -->
+        <div class="bg-blue-50 border border-blue-200 rounded-xl p-5 mb-8 flex items-start pdf-hide">
+            <svg class="w-6 h-6 text-blue-500 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <div>
+                <h4 class="text-blue-900 font-bold mb-1">GST & TDS Quick Note</h4>
+                <p class="text-blue-800 text-sm">
+                    TDS on certain supplies is typically <b>2%</b> of the <i>taxable value</i> (basic price). For intrastate supplies, GST splits into <b>SGST</b> and <b>CGST</b> equally. Select an <b>Item Name</b> and enter the <b>Total Price</b>—all other fields will auto-calculate.
+                </p>
+            </div>
+        </div>
+
+        <!-- Printable Area Wrapper -->
+        <div id="pdf-wrapper" class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+            
+            <div class="p-6 bg-white border-b border-gray-200 flex justify-between items-center">
+                <div>
+                    <h2 class="font-bold text-gray-900 text-xl">TDS Calculation Worksheet</h2>
+                    <p class="text-sm text-gray-500 mt-1">Generated by Sync GST</p>
+                </div>
+                <button id="addRowBtn" onclick="addRow()" class="bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 text-sm font-medium py-1.5 px-4 rounded shadow-sm transition-colors pdf-hide">
+                    + Add Row
+                </button>
+            </div>
+
+            <!-- Table -->
+            <div class="overflow-x-auto">
+                <table id="calcTable" class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-3 py-3 text-center text-xs font-semibold text-gray-500 w-12">#</th>
+                            <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 w-48">Item Name</th>
+                            <th class="px-3 py-3 text-center text-xs font-semibold text-gray-500 w-20">GST %</th>
+                            <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 w-32">Total Price</th>
+                            <th class="px-4 py-3 text-right text-xs font-semibold text-gray-500">Basic Price</th>
+                            <th class="px-4 py-3 text-right text-xs font-semibold text-gray-500">SGST</th>
+                            <th class="px-4 py-3 text-right text-xs font-semibold text-gray-500">CGST</th>
+                            <th class="px-4 py-3 text-right text-xs font-semibold text-gray-500">Total Bill</th>
+                            <th class="px-4 py-3 text-right text-xs font-semibold text-teal-600">TDS (2%)</th>
+                            <th class="px-4 py-3 text-right text-xs font-semibold text-blue-600 w-32">Bank Transfer</th>
+                            <th class="px-3 py-3 text-center text-xs font-semibold text-gray-500 w-16 pdf-hide action-col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="calcBody" class="bg-white divide-y divide-gray-200">
+                        <!-- Rows injected by JS -->
+                    </tbody>
+                    <tfoot class="bg-gray-50 border-t-2 border-gray-200">
+                        <tr>
+                            <td colspan="4" class="px-4 py-4 text-right font-bold text-gray-900">Grand Total</td>
+                            <td id="totalBasic" class="px-4 py-4 numeric text-gray-700 font-medium">0.00</td>
+                            <td id="totalSGST" class="px-4 py-4 numeric text-gray-500">0.00</td>
+                            <td id="totalCGST" class="px-4 py-4 numeric text-gray-500">0.00</td>
+                            <td id="totalBill" class="px-4 py-4 numeric text-gray-900 font-bold">0.00</td>
+                            <td id="totalTDS" class="px-4 py-4 numeric text-teal-600 font-bold">0.00</td>
+                            <td id="totalBank" class="px-4 py-4 numeric text-blue-600 font-bold text-lg">0.00</td>
+                            <td class="pdf-hide action-col"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            
+            <!-- Watermark text visible only on PDF (hidden by default) -->
+            <div id="pdf-footer" class="hidden p-4 text-center text-sm text-gray-400 border-t border-gray-100">
+                Software Developed By: Sync GST. Web: syncgst.in
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-12 mt-auto pdf-hide">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="col-span-1 md:col-span-2">
+                <span class="text-2xl font-bold text-white mb-4 block">Sync<span class="text-teal-500">GST</span></span>
+                <p class="mb-4 max-w-sm">Simplifying taxation, reconciliation, and ledger management for professionals.</p>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-4">Quick Links</h4>
+                <ul class="space-y-2">
+                    <li><a href="pricing.html" class="hover:text-white transition-colors">Pricing</a></li>
+                    <li><a href="about-us.html" class="hover:text-white transition-colors">About Us</a></li>
+                    <li><a href="contact.html" class="hover:text-white transition-colors">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-4">Legal</h4>
+                <ul class="space-y-2">
+                    <li><a href="#" class="hover:text-white transition-colors">Terms & Conditions</a></li>
+                    <li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-8 border-t border-gray-800 text-sm text-center md:text-left">
+            &copy; 2026 Sync GST. All rights reserved.
+        </div>
+    </footer>
+
+<!-- html2pdf Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<script>
+const ITEM_RATES = {
+    'CEMENT': 18,'LOHA': 18,'MURUM': 5,'RET': 5,'JCB SERVICE': 18,
+    'GITTI': 5,'BRICKS': 12,'OTHER SERVICES': 18,'TILES': 18,'TAAR': 18,
+    'POLYTHENE': 18,'RO WATER': 18,'NORMAL WATER TANKER': 0,
+    'BRUSH': 18,'LABOUR CHARGE': 18,'FURNITURE': 18,'ELECTRONICS ITEMS': 18,
+    'MACHINE RENT': 18,'PAINT': 18,'PAINTING SERVICE': 18,'TRANSPORTATION 18%': 18,
+    'TRANSPORTATION 5%': 5, 'STATIONERY': 18
+};
+
+const bodyEl = document.getElementById('calcBody');
+const totalBasicEl = document.getElementById('totalBasic');
+const totalSgstEl = document.getElementById('totalSGST');
+const totalCgstEl = document.getElementById('totalCGST');
+const totalBillEl = document.getElementById('totalBill');
+const totalTdsEl = document.getElementById('totalTDS');
+const totalBankEl = document.getElementById('totalBank');
+
+// Generate the <option> tags once
+const optionsHtml = Object.keys(ITEM_RATES).map(i => `<option value="${i}">${i}</option>`).join('');
+
+function fmt(n){ return (isFinite(n)? Number(n).toFixed(2) : '0.00'); }
+
+// === Core Calculation Logic ===
+function calculateTDS(){
+    let tBasic = 0, tSgst = 0, tCgst = 0, tBill = 0, tTds = 0, tBank = 0;
+
+    [...bodyEl.querySelectorAll('tr')].forEach((tr, idx) => {
+        tr.querySelector('.rownum').textContent = idx + 1;
+        
+        const sel = tr.querySelector('.itemSelect');
+        const rateCell = tr.querySelector('.gstRate');
+        const priceInput = tr.querySelector('.totalPrice');
+        
+        const item = sel.value;
+        const gstRate = ITEM_RATES[item] || 0;
+        rateCell.textContent = gstRate + '%';
+
+        const total = parseFloat(priceInput.value) || 0;
+        const basic = total / (1 + gstRate / 100);
+        const sg = basic * (gstRate / 2) / 100;
+        const cg = sg;
+        const bill = basic + sg + cg; // This equals the input total mathematically
+        const tds = gstRate > 0 ? (basic * 0.02) : 0;
+        const bank = bill - tds;
+
+        tr.querySelector('.basic').textContent = fmt(basic);
+        tr.querySelector('.sgst').textContent = fmt(sg);
+        tr.querySelector('.cgst').textContent = fmt(cg);
+        tr.querySelector('.totalBill').textContent = fmt(bill);
+        tr.querySelector('.tds').textContent = fmt(tds);
+        tr.querySelector('.bank').textContent = fmt(bank);
+
+        tBasic += basic;
+        tSgst += sg;
+        tCgst += cg;
+        tBill += bill;
+        tTds += tds;
+        tBank += bank;
+    });
+
+    totalBasicEl.textContent = fmt(tBasic);
+    totalSgstEl.textContent = fmt(tSgst);
+    totalCgstEl.textContent = fmt(tCgst);
+    totalBillEl.textContent = fmt(tBill);
+    totalTdsEl.textContent = fmt(tTds);
+    totalBankEl.textContent = fmt(tBank);
+}
+
+// === Table Controls ===
+function makeRow(){
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+        <td class="px-3 py-2 text-center text-sm text-gray-500 rownum">1</td>
+        <td class="px-2 py-2">
+            <select class="itemSelect block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                ${optionsHtml}
+            </select>
+        </td>
+        <td class="px-3 py-2 text-center text-sm font-medium text-gray-600 gstRate">0%</td>
+        <td class="px-2 py-2">
+            <input type="number" min="0" step="0.01" placeholder="0.00" class="totalPrice block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-right">
+        </td>
+        <td class="px-4 py-2 basic numeric text-sm text-gray-700">0.00</td>
+        <td class="px-4 py-2 sgst numeric text-sm text-gray-500">0.00</td>
+        <td class="px-4 py-2 cgst numeric text-sm text-gray-500">0.00</td>
+        <td class="px-4 py-2 totalBill numeric text-sm font-semibold text-gray-900">0.00</td>
+        <td class="px-4 py-2 tds numeric text-sm font-semibold text-teal-600">0.00</td>
+        <td class="px-4 py-2 bank numeric text-sm font-bold text-blue-600">0.00</td>
+        <td class="px-3 py-2 text-center pdf-hide action-col">
+            <button type="button" class="text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 rounded px-2 py-1 transition-colors text-sm" onclick="deleteRow(this)">✕</button>
+        </td>
+    `;
+    return tr;
+}
+
+function addRow(){ 
+    bodyEl.appendChild(makeRow()); 
+    calculateTDS(); 
+}
+
+function deleteRow(btn){
+    btn.closest('tr')?.remove();
+    calculateTDS();
+}
+
+// === Bulletproof Event Delegation ===
+document.getElementById('calcTable').addEventListener('input', function(e) {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') {
+        calculateTDS();
+    }
+});
+document.getElementById('calcTable').addEventListener('change', function(e) {
+    if (e.target.tagName === 'SELECT') {
+        calculateTDS();
+    }
+});
+
+// === PDF Export ===
+function downloadPDF(){
+    const element = document.getElementById('pdf-wrapper');
+    const actionCols = document.querySelectorAll('.action-col');
+    const pdfFooter = document.getElementById('pdf-footer');
+    
+    // Temporarily hide action columns and show pdf footer
+    actionCols.forEach(col => col.style.display = 'none');
+    pdfFooter.classList.remove('hidden');
+
+    const opt = {
+        margin: [0.5, 0.5, 0.5, 0.5],
+        filename: 'SyncGST_TDS_Calculator.pdf',
+        image: { type: 'jpeg', quality: 1 },
+        html2canvas: { scale: 2, background: '#ffffff', windowWidth: 1200 },
+        jsPDF: { unit: 'in', format: 'a4', orientation: 'landscape' },
+        pagebreak: { mode: ['css','legacy'] }
+    };
+    
+    html2pdf().set(opt).from(element).save().then(() => {
+        // Restore action columns and hide pdf footer after generation
+        actionCols.forEach(col => col.style.display = '');
+        pdfFooter.classList.add('hidden');
+    });
+}
+
+// Initialize first row
+window.addEventListener('load', () => {
+    addRow();
+});
+</script>
+</body>
+</html>

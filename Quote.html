@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Free Quotation Maker | Sync GST</title>
+<!-- Load Tailwind CSS + Official Forms Plugin for perfect input boxes -->
+<script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    th { text-transform: uppercase; letter-spacing: 0.05em; }
+    .numeric { text-align: right; }
+    /* Hide number input arrows for cleaner look */
+    input[type=number]::-webkit-inner-spin-button, 
+    input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+</style>
+</head>
+<body class="bg-gray-50 text-gray-800 flex flex-col min-h-screen">
+
+    <!-- Global Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex-shrink-0 flex items-center cursor-pointer">
+                    <span class="text-2xl font-bold text-blue-600">Sync<span class="text-teal-500">GST</span></span>
+                </div>
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="index.html" class="text-gray-600 hover:text-blue-600 font-medium">Home</a>
+                    <a href="index.html#free-tools" class="text-blue-600 font-medium">Free Tools</a>
+                    <a href="pricing.html" class="text-gray-600 hover:text-blue-600 font-medium">Pricing</a>
+                    <a href="about-us.html" class="text-gray-600 hover:text-blue-600 font-medium">About Us</a>
+                    <a href="contact.html" class="text-gray-600 hover:text-blue-600 font-medium">Contact</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="App" class="text-blue-600 font-semibold hover:text-blue-800">Log in</a>
+                    <a href="App" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg font-medium transition-all shadow-md">Sign up for free</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <section class="bg-white border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 text-center md:text-left flex flex-col md:flex-row justify-between items-center">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-900 tracking-tight mb-2">Quotation Maker</h1>
+                <p class="text-gray-500 text-lg">Draft professional service and product estimates instantly.</p>
+            </div>
+            <div class="mt-4 md:mt-0">
+                <button onclick="generatePDF()" class="bg-teal-500 hover:bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold shadow-md transition-all flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    Download PDF
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main App Container -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+        
+        <!-- Top Grid: Seller, Buyer, Quotation Info -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            
+            <!-- Seller Details -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-1 bg-blue-500"></div>
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="font-bold text-gray-900 text-lg">Seller Details</h3>
+                    <button onclick="clearDetails('seller')" class="text-xs text-red-500 hover:text-red-700 bg-red-50 px-2 py-1 rounded">Reset</button>
+                </div>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Seller Name</label>
+                        <input type="text" id="sellerName" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Seller GSTIN <span class="font-normal text-gray-400">(Optional)</span></label>
+                        <input type="text" id="sellerGST" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm uppercase">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Address</label>
+                        <textarea id="sellerAddress" rows="2" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm resize-none"></textarea>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">State</label>
+                            <select id="sellerState" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"></select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Mobile No.</label>
+                            <input type="text" id="sellerMobile" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Buyer Details -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-1 bg-teal-500"></div>
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="font-bold text-gray-900 text-lg">Buyer Details</h3>
+                    <button onclick="clearDetails('buyer')" class="text-xs text-red-500 hover:text-red-700 bg-red-50 px-2 py-1 rounded">Reset</button>
+                </div>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Buyer Name</label>
+                        <input type="text" id="buyerName" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Buyer GSTIN <span class="font-normal text-gray-400">(Optional)</span></label>
+                        <input type="text" id="buyerGST" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm uppercase">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Address</label>
+                        <textarea id="buyerAddress" rows="2" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm resize-none"></textarea>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">State</label>
+                            <select id="buyerState" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"></select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Mobile No.</label>
+                            <input type="text" id="buyerMobile" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quotation & Bank Details -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-1 bg-indigo-500"></div>
+                <h3 class="font-bold text-gray-900 text-lg mb-4">Quotation Info</h3>
+                <div class="space-y-4">
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Quotation No.</label>
+                            <input type="text" id="invoiceNo" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm uppercase">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Date</label>
+                            <input type="date" id="invoiceDate" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Payment Terms</label>
+                        <textarea id="paymentTerms" rows="2" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm resize-none" placeholder="e.g. 50% advance, valid for 15 days"></textarea>
+                    </div>
+
+                    <div class="border-t border-gray-100 pt-3">
+                        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Bank Details (Optional)</h4>
+                        <div class="grid grid-cols-2 gap-3 mb-3">
+                            <div class="col-span-2">
+                                <input type="text" id="bankName" placeholder="Bank Name" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                            </div>
+                            <div class="col-span-2">
+                                <input type="text" id="accountNo" placeholder="Account Number" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                            </div>
+                            <div>
+                                <input type="text" id="ifsc" placeholder="IFSC" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm uppercase">
+                            </div>
+                            <div>
+                                <input type="text" id="branch" placeholder="Branch" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Items Table -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-8 overflow-hidden">
+            <div class="p-4 bg-gray-50 border-b border-gray-200 flex justify-between items-center">
+                <h3 class="font-bold text-gray-900">Line Items</h3>
+                <button onclick="addItem()" class="bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 text-sm font-medium py-1 px-3 rounded shadow-sm transition-colors">
+                    + Add Row
+                </button>
+            </div>
+            <div class="overflow-x-auto">
+                <table id="itemsTable" class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 w-24">Item No</th>
+                            <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 w-64">Item Name</th>
+                            <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 w-32">HSN Code</th>
+                            <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 w-24">Qty</th>
+                            <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 w-40">Price (INR)</th>
+                            <th class="px-4 py-3 text-right text-xs font-semibold text-gray-900">Total (INR)</th>
+                            <th class="px-4 py-3 text-center text-xs font-semibold text-gray-500 w-16">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        <!-- Rows injected by JS -->
+                    </tbody>
+                    <tfoot class="bg-gray-50">
+                        <tr>
+                            <td colspan="5" class="px-4 py-4 text-right font-bold text-gray-900">Grand Total</td>
+                            <td class="grandTotal px-4 py-4 numeric text-blue-600 font-bold text-lg">0.00</td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+
+        <!-- Bottom Grid: Payment Summary & Uploads -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            
+            <!-- Summary Verification -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <h3 class="font-bold text-gray-900 text-lg mb-4 border-b pb-2">Summary Verification</h3>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Total Quotation Value</label>
+                        <input type="number" id="totalInvoice" class="block w-full rounded-md border-gray-200 bg-gray-50 font-bold text-blue-700 sm:text-sm" readonly>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Payment Terms (Preview)</label>
+                        <textarea id="paymentTermsSummary" rows="3" class="block w-full rounded-md border-gray-200 bg-gray-50 text-gray-600 sm:text-sm resize-none" readonly></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Uploads -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <h3 class="font-bold text-gray-900 text-lg mb-4 border-b pb-2">Branding (Optional)</h3>
+                <div class="space-y-5">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Company Logo <span class="text-gray-400 font-normal">(Shows as faint watermark)</span></label>
+                        <div class="flex items-center gap-3">
+                            <input type="file" id="logoUpload" accept="image/*" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 border border-gray-200 rounded-md p-1">
+                            <button onclick="clearImage('logo')" class="text-sm bg-red-50 text-red-600 hover:bg-red-100 px-3 py-2 rounded-md font-medium transition-colors">Clear</button>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Authorized Signature</label>
+                        <div class="flex items-center gap-3">
+                            <input type="file" id="signatureUpload" accept="image/*" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 border border-gray-200 rounded-md p-1">
+                            <button onclick="clearImage('signature')" class="text-sm bg-red-50 text-red-600 hover:bg-red-100 px-3 py-2 rounded-md font-medium transition-colors">Clear</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-12 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="col-span-1 md:col-span-2">
+                <span class="text-2xl font-bold text-white mb-4 block">Sync<span class="text-teal-500">GST</span></span>
+                <p class="mb-4 max-w-sm">Simplifying taxation, reconciliation, and ledger management for professionals.</p>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-4">Quick Links</h4>
+                <ul class="space-y-2">
+                    <li><a href="pricing.html" class="hover:text-white transition-colors">Pricing</a></li>
+                    <li><a href="about-us.html" class="hover:text-white transition-colors">About Us</a></li>
+                    <li><a href="contact.html" class="hover:text-white transition-colors">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-4">Legal</h4>
+                <ul class="space-y-2">
+                    <li><a href="#" class="hover:text-white transition-colors">Terms & Conditions</a></li>
+                    <li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-8 border-t border-gray-800 text-sm text-center md:text-left">
+            &copy; 2026 Sync GST. All rights reserved.
+        </div>
+    </footer>
+
+<!-- PDF Libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+
+<script>
+// === States & Initialization ===
+const states = ["Andhra Pradesh","Arunachal Pradesh","Assam","Bihar","Chhattisgarh","Goa","Gujarat","Haryana","Himachal Pradesh","Jharkhand","Karnataka","Kerala","Madhya Pradesh","Maharashtra","Manipur","Meghalaya","Mizoram","Nagaland","Odisha","Punjab","Rajasthan","Sikkim","Tamil Nadu","Telangana","Tripura","Uttar Pradesh","Uttarakhand","West Bengal","Andaman & Nicobar Islands","Chandigarh","Dadra & Nagar Haveli and Daman & Diu","Delhi","Jammu & Kashmir","Ladakh","Lakshadweep","Puducherry"];
+const sellerStateSelect=document.getElementById('sellerState');
+const buyerStateSelect=document.getElementById('buyerState');
+states.forEach(st=>{ sellerStateSelect.add(new Option(st,st)); buyerStateSelect.add(new Option(st,st)); });
+if(document.getElementById('invoiceDate')) document.getElementById('invoiceDate').valueAsDate=new Date();
+
+// === Local Storage Keys ===
+const LS_SELLER = 'sellerDetails_v1';
+const LS_BUYER = 'buyerDetails_v1';
+const LS_ITEMS = 'quotationItems_v1';
+const LS_PAYMENT = 'paymentTerms_v1';
+const LS_BANK = 'bankDetails_v1';
+const LS_LOGO = 'logo_v1';
+const LS_SIG = 'signature_v1';
+
+// === Storage Helpers ===
+function saveDetails(prefix){
+    const obj = {};
+    const fields = prefix === 'seller' ? ['sellerName','sellerGST','sellerAddress','sellerState','sellerMobile'] : ['buyerName','buyerGST','buyerAddress','buyerState','buyerMobile'];
+    fields.forEach(k=>{ const el=document.getElementById(k); if(el) obj[k]=el.value; });
+    localStorage.setItem(prefix==='seller'?LS_SELLER:LS_BUYER, JSON.stringify(obj));
+}
+
+function loadDetails(prefix){
+    const key = prefix==='seller'?LS_SELLER:LS_BUYER;
+    const saved = localStorage.getItem(key);
+    if(saved){ const obj = JSON.parse(saved); for(const k in obj){ const el=document.getElementById(k); if(el) el.value = obj[k]; } }
+}
+
+function clearDetails(prefix){
+    if(prefix==='seller') localStorage.removeItem(LS_SELLER); else localStorage.removeItem(LS_BUYER);
+    document.querySelectorAll(`#${prefix}Name, #${prefix}GST, #${prefix}Address, #${prefix}State, #${prefix}Mobile`).forEach(input=>{ if(!input) return; if(input.tagName==='SELECT') input.selectedIndex=0; else input.value=''; });
+    calculateInvoice();
+}
+
+function saveItems(){
+    const items = [];
+    document.querySelectorAll('#itemsTable tbody tr').forEach(r=>{
+        items.push({
+            itemNo: r.querySelector('.itemNo') ? r.querySelector('.itemNo').value : '',
+            itemName: r.querySelector('.itemName') ? r.querySelector('.itemName').value : '',
+            hsnCode: r.querySelector('.hsnCode') ? r.querySelector('.hsnCode').value : '',
+            quantity: r.querySelector('.quantity') ? r.querySelector('.quantity').value : '',
+            price: r.querySelector('.price') ? r.querySelector('.price').value : ''
+        });
+    });
+    localStorage.setItem(LS_ITEMS, JSON.stringify(items));
+    localStorage.setItem(LS_PAYMENT, document.getElementById('paymentTerms').value || '');
+    const bankObj = {
+        bankName: document.getElementById('bankName').value || '',
+        accountNo: document.getElementById('accountNo').value || '',
+        ifsc: document.getElementById('ifsc').value || '',
+        branch: document.getElementById('branch').value || ''
+    };
+    localStorage.setItem(LS_BANK, JSON.stringify(bankObj));
+}
+
+function loadItems(){
+    const saved = localStorage.getItem(LS_ITEMS);
+    const tbody = document.querySelector('#itemsTable tbody');
+    tbody.innerHTML = '';
+    
+    let itemsToLoad = [];
+    if(saved) itemsToLoad = JSON.parse(saved);
+    if(itemsToLoad.length === 0) itemsToLoad = [{ itemNo: '1', itemName: '', hsnCode: '', quantity: '1', price: '0' }];
+
+    itemsToLoad.forEach(it=>{
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td class="px-2 py-2"><input type="text" class="itemNo block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" value="${escapeHtml(it.itemNo||'')}"></td>
+            <td class="px-2 py-2"><input type="text" class="itemName block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" value="${escapeHtml(it.itemName||'')}"></td>
+            <td class="px-2 py-2"><input type="text" class="hsnCode block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" value="${escapeHtml(it.hsnCode||'')}"></td>
+            <td class="px-2 py-2"><input type="number" class="quantity block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-center" value="${escapeHtml(it.quantity||1)}" min="1"></td>
+            <td class="px-2 py-2"><input type="number" class="price block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-right" value="${escapeHtml(it.price||0)}" min="0" step="0.01"></td>
+            <td class="px-4 py-2 total numeric text-sm font-semibold text-gray-900">0.00</td>
+            <td class="px-2 py-2 text-center"><button class="text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 rounded px-2 py-1 transition-colors text-sm" onclick="deleteRow(this)">✕</button></td>`;
+        tbody.appendChild(tr);
+    });
+    
+    const pay = localStorage.getItem(LS_PAYMENT);
+    if(pay) document.getElementById('paymentTerms').value = pay;
+    
+    const bankSaved = localStorage.getItem(LS_BANK);
+    if(bankSaved){
+        try{ const b = JSON.parse(bankSaved); if(b.bankName) document.getElementById('bankName').value = b.bankName; if(b.accountNo) document.getElementById('accountNo').value = b.accountNo; if(b.ifsc) document.getElementById('ifsc').value = b.ifsc; if(b.branch) document.getElementById('branch').value = b.branch; } catch(e){}
+    }
+}
+
+function escapeHtml(unsafe){ return (unsafe+'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;'); }
+
+// === Image Uploads ===
+document.getElementById('logoUpload').addEventListener('change', (e) => saveImage(e, 'logo'));
+document.getElementById('signatureUpload').addEventListener('change', (e) => saveImage(e, 'signature'));
+
+function saveImage(e,key){ 
+    const file = e.target.files[0]; 
+    if(!file) return; 
+    const reader = new FileReader(); 
+    reader.onload = function(ev){ 
+        try{ 
+            localStorage.setItem(key === 'logo' ? LS_LOGO : LS_SIG, ev.target.result); 
+            alert((key.charAt(0).toUpperCase()+key.slice(1)) + ' uploaded and saved!'); 
+        } catch(err){ 
+            alert('Image too large to save in localStorage.'); 
+        } 
+    }; 
+    reader.readAsDataURL(file); 
+}
+
+function clearImage(key){ 
+    localStorage.removeItem(key === 'logo' ? LS_LOGO : LS_SIG); 
+    document.getElementById(key+'Upload').value=''; 
+    alert((key.charAt(0).toUpperCase()+key.slice(1)) + ' cleared.'); 
+}
+
+// === Event Listeners ===
+['sellerName','sellerGST','sellerAddress','sellerState','sellerMobile'].forEach(id=>{ const el=document.getElementById(id); if(el){ el.addEventListener('input', ()=>saveDetails('seller')); el.addEventListener('change', ()=>saveDetails('seller')); } });
+['buyerName','buyerGST','buyerAddress','buyerState','buyerMobile'].forEach(id=>{ const el=document.getElementById(id); if(el){ el.addEventListener('input', ()=>saveDetails('buyer')); el.addEventListener('change', ()=>saveDetails('buyer')); } });
+['paymentTerms','bankName','accountNo','ifsc','branch', 'invoiceNo', 'invoiceDate'].forEach(id=>{ const el=document.getElementById(id); if(el){ el.addEventListener('input', () => { calculateInvoice(); saveItems(); }); el.addEventListener('change', () => { calculateInvoice(); saveItems(); }); } });
+
+// Bulletproof Table Delegation
+document.getElementById('itemsTable').addEventListener('input', function(e) {
+    if (e.target.tagName === 'INPUT') {
+        calculateInvoice();
+        saveItems();
+    }
+});
+
+// === Controls ===
+function addItem(){ 
+    const tbody=document.querySelector('#itemsTable tbody'); 
+    const nextNo = tbody.querySelectorAll('tr').length + 1; 
+    const tr=document.createElement('tr'); 
+    tr.innerHTML = `
+        <td class="px-2 py-2"><input type="text" class="itemNo block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" value="${nextNo}"></td>
+        <td class="px-2 py-2"><input type="text" class="itemName block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"></td>
+        <td class="px-2 py-2"><input type="text" class="hsnCode block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"></td>
+        <td class="px-2 py-2"><input type="number" class="quantity block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-center" value="1" min="1"></td>
+        <td class="px-2 py-2"><input type="number" class="price block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-right" value="0" min="0" step="0.01"></td>
+        <td class="px-4 py-2 total numeric text-sm font-semibold text-gray-900">0.00</td>
+        <td class="px-2 py-2 text-center"><button class="text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 rounded px-2 py-1 transition-colors text-sm" onclick="deleteRow(this)">✕</button></td>`; 
+    tbody.appendChild(tr); 
+    calculateInvoice(); 
+    saveItems(); 
+}
+
+function deleteRow(btn){ 
+    const row = btn.closest('tr'); 
+    if(row) row.remove(); 
+    calculateInvoice(); 
+    saveItems(); 
+}
+
+function calculateInvoice(){ 
+    let gTotal = 0; 
+    document.querySelectorAll('#itemsTable tbody tr').forEach((r, idx)=>{ 
+        const qty = parseFloat(r.querySelector('.quantity').value) || 0; 
+        const price = parseFloat(r.querySelector('.price').value) || 0; 
+        const total = qty * price; 
+        
+        const totalEl = r.querySelector('.total'); 
+        if(totalEl) totalEl.innerText = total.toFixed(2); 
+        
+        const itemNoEl = r.querySelector('.itemNo'); 
+        if(itemNoEl && (!itemNoEl.value || itemNoEl.value.trim()==='')) itemNoEl.value = (idx+1); 
+        
+        gTotal += total; 
+    }); 
+    
+    document.querySelector('.grandTotal').innerText = gTotal.toFixed(2); 
+    
+    const totalInvoiceEl = document.getElementById('totalInvoice'); 
+    if(totalInvoiceEl) totalInvoiceEl.value = gTotal.toFixed(2); 
+    
+    const paySum = document.getElementById('paymentTermsSummary'); 
+    if(paySum) paySum.value = document.getElementById('paymentTerms').value || ''; 
+}
+
+function inWords(num){ 
+    num = Number(num)||0; 
+    const a=['','One','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten','Eleven','Twelve','Thirteen','Fourteen','Fifteen','Sixteen','Seventeen','Eighteen','Nineteen']; 
+    const b=['','','Twenty','Thirty','Forty','Fifty','Sixty','Seventy','Eighty','Ninety']; 
+    if(num===0) return 'Zero Only'; 
+    if((num.toString()).length>9) return 'Overflow'; 
+    const n = ('000000000' + num).substr(-9).match(/(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})/); 
+    let str=''; 
+    if(Number(n[1])!=0) str += (a[Number(n[1])] || (b[Math.floor(n[1]/10)]+' '+a[n[1]%10])) + ' Crore '; 
+    if(Number(n[2])!=0) str += (a[Number(n[2])] || (b[Math.floor(n[2]/10)]+' '+a[n[2]%10])) + ' Lakh '; 
+    if(Number(n[3])!=0) str += (a[Number(n[3])] || (b[Math.floor(n[3]/10)]+' '+a[n[3]%10])) + ' Thousand '; 
+    if(Number(n[4])!=0) str += (a[Number(n[4])] || (b[Math.floor(n[4]/10)]+' '+a[n[4]%10])) + ' Hundred '; 
+    if(Number(n[5])!=0) str += ((str!='')?'and ':'') + (a[Number(n[5])] || (b[Math.floor(n[5]/10)]+' '+a[n[5]%10])) + ' '; 
+    return (str.trim() + ' Only'); 
+}
+
+// === Image Scaling Helpers ===
+async function getFaintLogo(dataURL, opacity=0.07){ 
+    return new Promise(resolve=>{ 
+        if(!dataURL) return resolve(null); 
+        const img = new Image(); 
+        img.onload = ()=>{ 
+            const canvas = document.createElement('canvas'); 
+            canvas.width = img.naturalWidth; 
+            canvas.height = img.naturalHeight; 
+            const ctx = canvas.getContext('2d'); 
+            ctx.globalAlpha = opacity; 
+            ctx.drawImage(img,0,0); 
+            resolve({ url: canvas.toDataURL('image/png'), w: img.naturalWidth, h: img.naturalHeight }); 
+        }; 
+        img.onerror = ()=> resolve(null); 
+        img.src = dataURL; 
+    }); 
+}
+
+function getImageDimensions(dataURL) {
+    return new Promise(resolve => {
+        if (!dataURL) return resolve(null);
+        const img = new Image();
+        img.onload = () => resolve({ w: img.naturalWidth, h: img.naturalHeight });
+        img.onerror = () => resolve(null);
+        img.src = dataURL;
+    });
+}
+
+function detectImageFormat(dataURL){ 
+    if(!dataURL) return 'PNG'; 
+    if(dataURL.includes('jpeg') || dataURL.includes('jpg')) return 'JPEG'; 
+    return 'PNG'; 
+}
+
+// === PDF Generation ===
+async function generatePDF(){ 
+    try{
+        const { jsPDF } = window.jspdf; 
+        const doc = new jsPDF('p','mm','a4'); 
+        const pageWidth = doc.internal.pageSize.getWidth(); 
+        const pageHeight = doc.internal.pageSize.getHeight(); 
+        const margin = {left:14, right:14, top:15, bottom:18}; 
+        const n = v => (parseFloat(v)||0).toFixed(2);
+
+        const gTotal = parseFloat(document.querySelector('.grandTotal').innerText)||0;
+        const totalWords = inWords(Math.round(gTotal));
+
+        function addFooter(){ 
+            doc.setFontSize(9); 
+            doc.setFont('helvetica','bold'); 
+            doc.setTextColor(100); 
+            doc.text('Software Developed By: Sync GST. Web: syncgst.in', pageWidth/2, pageHeight - 6, {align:'center'}); 
+            doc.setTextColor(0); 
+        }
+
+        function drawHeader(){
+            doc.setFont('helvetica','bold');
+            doc.setFontSize(15);
+            doc.text('QUOTATION', pageWidth/2, margin.top, { align: 'center' });
+
+            let y = 38;
+
+            doc.setFont('helvetica','bold');
+            doc.setFontSize(12);
+            doc.text('Seller:', margin.left, y);
+            doc.text('Buyer:', pageWidth/2, y);
+
+            doc.setFont('helvetica','normal');
+            doc.setFontSize(11);
+
+            const sName   = document.getElementById('sellerName').value || '-';
+            const sGST    = 'GSTIN: ' + (document.getElementById('sellerGST').value || '-');
+            const sAddr   = document.getElementById('sellerAddress').value || '-';
+            const sState  = 'State: ' + (document.getElementById('sellerState').value || '-');
+            const sMobile = 'Mobile: ' + (document.getElementById('sellerMobile').value || '-');
+
+            doc.text(sName, margin.left, y + 7);
+            doc.text(sGST, margin.left, y + 13);
+
+            const sLines = doc.splitTextToSize('Address: ' + sAddr, (pageWidth/2 - margin.left - 5));
+            doc.text(sLines, margin.left, y + 19);
+            let sH = (sLines.length - 1) * doc.getLineHeight() / doc.internal.scaleFactor;
+            doc.text(sState, margin.left, y + 19 + sH + 6);
+            doc.text(sMobile, margin.left, y + 19 + sH + 12);
+
+            const bName   = document.getElementById('buyerName').value || '-';
+            const bGST    = 'GSTIN: ' + (document.getElementById('buyerGST').value || '-');
+            const bAddr   = document.getElementById('buyerAddress').value || '-';
+            const bState  = 'State: ' + (document.getElementById('buyerState').value || '-');
+            const bMobile = 'Mobile: ' + (document.getElementById('buyerMobile').value || '-');
+
+            doc.text(bName, pageWidth/2, y + 7);
+            doc.text(bGST, pageWidth/2, y + 13);
+
+            const bLines = doc.splitTextToSize('Address: ' + bAddr, (pageWidth/2 - margin.right - 5));
+            doc.text(bLines, pageWidth/2, y + 19);
+            let bH = (bLines.length - 1) * doc.getLineHeight() / doc.internal.scaleFactor;
+            doc.text(bState, pageWidth/2, y + 19 + bH + 6);
+            doc.text(bMobile, pageWidth/2, y + 19 + bH + 12);
+
+            const extraGap = 10;
+            const invY = y + 30 + Math.max(sH, bH) + 6 + extraGap;
+            const invNo = document.getElementById('invoiceNo').value || '-';
+
+            let formattedDate = '-';
+            const invoiceDate = document.getElementById('invoiceDate').value;
+            if(invoiceDate){
+                const d = invoiceDate.split('-');
+                if(d.length === 3) formattedDate = `${d[2]}/${d[1]}/${d[0]}`;
+            }
+
+            doc.setFontSize(12);
+            doc.setFont('helvetica','bold'); 
+            doc.text('Quotation No: ' + invNo, margin.left, invY);
+            doc.text('Date: ' + formattedDate, pageWidth/2, invY);
+
+            return invY + 10;
+        }
+
+        const logoObj = await getFaintLogo(localStorage.getItem(LS_LOGO), 0.06);
+        if(logoObj){ 
+            const maxW = pageWidth * 0.4;
+            const maxH = pageHeight * 0.4;
+            const ratio = Math.min(maxW / logoObj.w, maxH / logoObj.h);
+            const finalW = logoObj.w * ratio;
+            const finalH = logoObj.h * ratio;
+            const x = (pageWidth - finalW) / 2;
+            const y = (pageHeight - finalH) / 2;
+            doc.addImage(logoObj.url, 'PNG', x, y, finalW, finalH); 
+        }
+
+        addFooter();
+        const headerBottomY = drawHeader();
+
+        const rows = Array.from(document.querySelectorAll('#itemsTable tbody tr'));
+        const head = ['Item No','Item Name','HSN','Qty','Price','Total'];
+        const body = rows.map(r=>[
+            r.querySelector('.itemNo') ? r.querySelector('.itemNo').value||'-' : '-',
+            r.querySelector('.itemName') ? r.querySelector('.itemName').value||'-' : '-',
+            r.querySelector('.hsnCode') ? r.querySelector('.hsnCode').value||'-' : '-',
+            r.querySelector('.quantity') ? r.querySelector('.quantity').value||'0' : '0',
+            r.querySelector('.price') ? (r.querySelector('.price').value||'0') : '0',
+            r.querySelector('.total') ? (r.querySelector('.total').innerText||'0') : '0'
+        ]);
+
+        const availableWidth = pageWidth - margin.left - margin.right;
+        const colWidths = {
+            0: availableWidth * 0.08,  // Item No
+            1: availableWidth * 0.38,  // Item Name
+            2: availableWidth * 0.12,  // HSN
+            3: availableWidth * 0.10,  // Qty
+            4: availableWidth * 0.14,  // Price
+            5: availableWidth * 0.18   // Total
+        };
+
+        doc.autoTable({
+            startY: headerBottomY,
+            margin: { left: margin.left, right: margin.right },
+            head: [head],
+            body: body,
+            theme: 'plain',
+            styles: { fontSize: 9, lineWidth: 0.2, lineColor: [156,163,175] },
+            headStyles: { fillColor: [243,244,246], textColor: [17,24,39], fontStyle: 'bold' },
+            columnStyles: Object.assign(
+                {},
+                ...Object.keys(colWidths).map(k => ({
+                    [k]: { cellWidth: colWidths[k], halign: ([3,4,5].includes(Number(k)) ? 'right' : 'left') }
+                }))
+            ),
+            didParseCell: function(data){
+                const isHead = data.section === 'head' || (data.cell && data.cell.section === 'head');
+                if(!isHead) return;
+                if ([3,4,5].includes(data.column.index)) {
+                    data.cell.styles.halign = 'right';
+                } else {
+                    data.cell.styles.halign = 'left';
+                }
+            }
+        });
+
+        let cursorY = doc.lastAutoTable.finalY + 8;
+
+        doc.setFontSize(9); doc.setFont('helvetica','bold'); doc.text('Terms & Conditions:', margin.left, cursorY);
+        const terms = [
+            'This quotation is valid for 15 days from the date of issue.',
+            'Prices are inclusive of all the applicable taxes.',
+            'Transportation charges, if applicable, will be charged additionally.',
+            'Prices quoted are indicative and subject to confirmation at the time of ordering.',
+            'Delivery timelines are approximate and start after order confirmation.'
+        ];
+        let noteY = cursorY + 6;
+        terms.forEach(line=>{
+            const wrapped = doc.splitTextToSize(line, (pageWidth/2 - margin.left - 6)); 
+            doc.text(wrapped, margin.left, noteY); 
+            noteY += wrapped.length * 5 + 2; 
+        });
+
+        doc.autoTable({
+            startY: cursorY,
+            margin:{left: pageWidth/2, right: margin.right},
+            head:[['Particulars','Details']],
+            body:[
+                [ 'Grand Total', n(gTotal) ],
+                [ 'Payment Terms', document.getElementById('paymentTerms').value || '-' ]
+            ],
+            theme:'plain',
+            styles:{fontSize:9, lineWidth:0.2, lineColor:[156,163,175]},
+            headStyles:{fillColor:[20,184,166], textColor:[255,255,255], fontStyle:'bold'},
+            columnStyles:{
+                0:{halign:'left'},
+                1:{halign:'right'}
+            },
+            didParseCell: function(data){
+                const isHead = data.section === 'head' || (data.cell && data.cell.section === 'head');
+                if(!isHead) return;
+                if(data.column && data.column.index === 0) data.cell.styles.halign = 'left';
+                if(data.column && data.column.index === 1) data.cell.styles.halign = 'right';
+            }
+        });
+
+        let afterPaymentY = doc.lastAutoTable.finalY + 6;
+
+        const bankName = document.getElementById('bankName').value || ''; 
+        const accountNo = document.getElementById('accountNo').value || ''; 
+        const ifsc = document.getElementById('ifsc').value || ''; 
+        const branch = document.getElementById('branch').value || '';
+        const anyBank = bankName.trim() || accountNo.trim() || ifsc.trim() || branch.trim();
+        
+        if(anyBank){
+            doc.autoTable({
+                startY: afterPaymentY,
+                margin:{left: pageWidth/2, right: margin.right},
+                head:[['Bank Detail','Value']],
+                body:[
+                    [ 'Bank Name', bankName || '-' ],
+                    [ 'Account No', accountNo || '-' ],
+                    [ 'IFSC', ifsc || '-' ],
+                    [ 'Branch', branch || '-' ]
+                ],
+                theme:'plain',
+                styles:{fontSize:9, lineWidth:0.2, lineColor:[156,163,175]},
+                headStyles:{fillColor:[59,130,246], textColor:[255,255,255], fontStyle:'bold'},
+                columnStyles:{
+                    0:{halign:'left'},
+                    1:{halign:'right'}
+                },
+                didParseCell: function(data){
+                    const isHead = data.section === 'head' || (data.cell && data.cell.section === 'head');
+                    if(!isHead) return;
+                    if(data.column && data.column.index === 0) data.cell.styles.halign = 'left';
+                    if(data.column && data.column.index === 1) data.cell.styles.halign = 'right';
+                }
+            });
+        }
+
+        const wordsY = Math.max(noteY, afterPaymentY + 6) + 6;
+        doc.setFontSize(10); 
+        doc.text('Grand Total (in words):', margin.left, wordsY); 
+        const wrappedWords = doc.splitTextToSize(totalWords, (pageWidth/2 - margin.left - 6)); 
+        doc.text(wrappedWords, margin.left, wordsY + 6);
+
+        let sigY = Math.max(doc.lastAutoTable ? doc.lastAutoTable.finalY : wordsY + 20, wordsY + wrappedWords.length * 5 + 20) + 12;
+        
+        if(sigY > pageHeight - 50){ 
+            doc.addPage(); 
+            if(logoObj) {
+                const maxW = pageWidth * 0.4;
+                const maxH = pageHeight * 0.4;
+                const ratio = Math.min(maxW / logoObj.w, maxH / logoObj.h);
+                const finalW = logoObj.w * ratio;
+                const finalH = logoObj.h * ratio;
+                const x = (pageWidth - finalW) / 2;
+                const y = (pageHeight - finalH) / 2;
+                doc.addImage(logoObj.url, 'PNG', x, y, finalW, finalH); 
+            }
+            sigY = 80; 
+            drawHeader(); 
+        }
+
+        const sigData = localStorage.getItem(LS_SIG);
+        if(sigData){ 
+            const sigDim = await getImageDimensions(sigData);
+            if (sigDim) {
+                const maxW = 40;
+                const maxH = 20;
+                const ratio = Math.min(maxW / sigDim.w, maxH / sigDim.h);
+                const finalW = sigDim.w * ratio;
+                const finalH = sigDim.h * ratio;
+                const fmt = detectImageFormat(sigData); 
+                try { 
+                    doc.addImage(sigData, fmt, pageWidth - margin.right - finalW, sigY, finalW, finalH); 
+                } catch(e) {} 
+                sigY += finalH + 2; 
+            }
+        }
+        
+        doc.text('For ' + (document.getElementById('sellerName').value || 'Seller'), pageWidth - margin.right, sigY, { align: 'right' }); 
+        doc.text('(Authorized Signatory)', pageWidth - margin.right, sigY + 6, { align: 'right' });
+
+        addFooter();
+        const buyerNameForFile = (document.getElementById('buyerName').value || 'Buyer').replace(/\s+/g,'_'); 
+        const invoiceNoForFile = (document.getElementById('invoiceNo').value || 'Quotation'); 
+        doc.save(`${buyerNameForFile}_${invoiceNoForFile}.pdf`);
+
+    } catch(err){ 
+        console.error(err); 
+        alert('Error generating PDF. Check console for details.'); 
+    } 
+}
+
+window.addEventListener('load', ()=>{ 
+    loadDetails('seller'); 
+    loadDetails('buyer'); 
+    loadItems(); 
+    calculateInvoice(); 
+});
+</script>
+</body>
+</html>

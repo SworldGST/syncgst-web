@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing | Sync GST Automation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-text {
+            background: linear-gradient(90deg, #2563eb, #14b8a6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 flex flex-col min-h-screen">
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <a href="index.html" class="flex-shrink-0 flex items-center cursor-pointer">
+                    <span class="text-2xl font-bold text-blue-600">Sync<span class="text-teal-500">GST</span></span>
+                </a>
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="index.html" class="text-gray-600 hover:text-blue-600 font-medium">Home</a>
+                    <a href="index.html#premium-tools" class="text-gray-600 hover:text-blue-600 font-medium">Premium Tools</a>
+                    <a href="index.html#free-tools" class="text-gray-600 hover:text-blue-600 font-medium">Free Tools</a>
+                    <a href="pricing.html" class="text-blue-600 font-semibold">Pricing</a>
+                    <a href="about-us.html" class="text-gray-600 hover:text-blue-600 font-medium">About Us</a>
+                    <a href="contact.html" class="text-gray-600 hover:text-blue-600 font-medium">Contact</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="app.html" class="text-blue-600 font-semibold hover:text-blue-800">Log in</a>
+                    <a href="app.html" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg font-medium transition-all shadow-md">Sign up for free</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Pricing Header -->
+    <section class="bg-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 mb-4">
+                Simple, transparent <span class="gradient-text">pricing.</span>
+            </h1>
+            <p class="text-lg text-gray-500 max-w-2xl mx-auto">
+                Pay only for the number of client GSTINs you manage. All plans include 1 year of unlimited imports. Unlock more premium automation tools as you scale.
+            </p>
+        </div>
+    </section>
+
+    <!-- Pricing Cards -->
+    <section class="py-12 bg-gray-50 flex-grow">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                
+                <!-- Starter Plan -->
+                <div class="bg-white border border-gray-200 rounded-3xl p-8 shadow-sm hover:shadow-lg transition-all flex flex-col relative">
+                    <h3 class="text-gray-500 font-bold text-sm uppercase tracking-wider mb-2">Starter</h3>
+                    <div class="flex items-baseline mb-6">
+                        <span class="text-4xl font-extrabold text-gray-900">₹299</span>
+                        <span class="text-gray-500 ml-1">/year</span>
+                    </div>
+                    <p class="text-sm font-bold text-gray-800 mb-6 pb-6 border-b border-gray-100">2 Companies (GSTINs)</p>
+                    
+                    <ul class="space-y-4 mb-8 flex-grow text-sm text-gray-600">
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-emerald-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            Unlimited GSTR-2B Imports
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-emerald-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            Tax-Slab Segregation
+                        </li>
+                        <li class="flex items-start font-semibold text-blue-700 mt-4 pt-4 border-t border-gray-100">
+                            <span class="mr-2">🚀</span> Premium Tool Unlocked:
+                        </li>
+                        <li class="flex items-start text-gray-700">
+                            <svg class="w-5 h-5 text-emerald-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            GSTR-1 JSON Cleaner
+                        </li>
+                    </ul>
+                    
+                    <a href="app.html" class="w-full block text-center py-3 bg-blue-50 text-blue-700 font-bold rounded-xl hover:bg-blue-600 hover:text-white transition-all">Get Started</a>
+                </div>
+
+                <!-- Professional Plan -->
+                <div class="bg-white border-2 border-blue-500 rounded-3xl p-8 shadow-xl relative flex flex-col transform md:-translate-y-4">
+                    <div class="absolute top-0 inset-x-0 transform -translate-y-1/2 flex justify-center">
+                        <span class="bg-blue-500 text-white text-xs font-bold uppercase tracking-wider py-1 px-3 rounded-full">Most Popular</span>
+                    </div>
+                    <h3 class="text-blue-600 font-bold text-sm uppercase tracking-wider mb-2">Professional</h3>
+                    <div class="flex items-baseline mb-6">
+                        <span class="text-4xl font-extrabold text-gray-900">₹599</span>
+                        <span class="text-gray-500 ml-1">/year</span>
+                    </div>
+                    <p class="text-sm font-bold text-gray-800 mb-6 pb-6 border-b border-gray-100">5 Companies (GSTINs)</p>
+                    
+                    <ul class="space-y-4 mb-8 flex-grow text-sm text-gray-600">
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-emerald-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span class="font-semibold text-gray-800">Everything in Starter</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-emerald-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            Permanent Ledger Mapping
+                        </li>
+                        <li class="flex items-start font-semibold text-teal-700 mt-4 pt-4 border-t border-gray-100">
+                            <span class="mr-2">🚀</span> Premium Tools Unlocked:
+                        </li>
+                        <li class="flex items-start text-gray-700">
+                            <svg class="w-5 h-5 text-emerald-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            GSTR-1 JSON Cleaner
+                        </li>
+                        <li class="flex items-start text-gray-700">
+                            <svg class="w-5 h-5 text-emerald-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            Bank Statement Injector
+                        </li>
+                    </ul>
+                    
+                    <a href="app.html" class="w-full block text-center py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-all shadow-md">Get Started</a>
+                </div>
+
+                <!-- Agency Plan -->
+                <div class="bg-white border border-gray-200 rounded-3xl p-8 shadow-sm hover:shadow-lg transition-all flex flex-col relative">
+                    <h3 class="text-gray-500 font-bold text-sm uppercase tracking-wider mb-2">Agency</h3>
+                    <div class="flex items-baseline mb-6">
+                        <span class="text-4xl font-extrabold text-gray-900">₹999</span>
+                        <span class="text-gray-500 ml-1">/year</span>
+                    </div>
+                    <p class="text-sm font-bold text-gray-800 mb-6 pb-6 border-b border-gray-100">10 Companies (GSTINs)</p>
+                    
+                    <ul class="space-y-4 mb-8 flex-grow text-sm text-gray-600">
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-emerald-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span class="font-semibold text-gray-800">Everything in Professional</span>
+                        </li>
+                        <li class="flex items-start font-semibold text-purple-700 mt-4 pt-4 border-t border-gray-100">
+                            <span class="mr-2">🚀</span> Premium Tools Unlocked:
+                        </li>
+                        <li class="flex items-start text-gray-700">
+                            <svg class="w-5 h-5 text-emerald-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            GSTR-1 JSON Cleaner
+                        </li>
+                        <li class="flex items-start text-gray-700">
+                            <svg class="w-5 h-5 text-emerald-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            Bank Statement Injector
+                        </li>
+                        <li class="flex items-start text-gray-700 font-bold">
+                            <svg class="w-5 h-5 text-emerald-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            Cash Sales Generator
+                        </li>
+                    </ul>
+                    
+                    <a href="app.html" class="w-full block text-center py-3 bg-blue-50 text-blue-700 font-bold rounded-xl hover:bg-blue-600 hover:text-white transition-all">Get Started</a>
+                </div>
+
+                <!-- Enterprise Plan -->
+                <div class="bg-gray-900 border border-gray-800 rounded-3xl p-8 shadow-lg flex flex-col relative">
+                    <h3 class="text-gray-400 font-bold text-sm uppercase tracking-wider mb-2">Enterprise</h3>
+                    <div class="flex items-baseline mb-6">
+                        <span class="text-4xl font-extrabold text-white">₹1,999</span>
+                        <span class="text-gray-500 ml-1">/year</span>
+                    </div>
+                    <p class="text-sm font-bold text-gray-300 mb-6 pb-6 border-b border-gray-700">25 Companies (GSTINs)</p>
+                    
+                    <ul class="space-y-4 mb-8 flex-grow text-sm text-gray-400">
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-emerald-400 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span class="font-semibold text-white">Everything in Agency</span>
+                        </li>
+                        <li class="flex items-start text-white font-semibold mt-4 pt-4 border-t border-gray-700">
+                            <span class="mr-2">🌟</span> Full Premium Automation Suite
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-emerald-400 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            E-Invoicce To Item Wise Purchase Tool
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-emerald-400 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            Early access to new tools
+                        </li>
+                    </ul>
+                    
+                    <a href="app.html" class="w-full block text-center py-3 bg-white text-gray-900 font-bold rounded-xl hover:bg-gray-200 transition-all">Get Started</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-16 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center text-gray-900 mb-10">Frequently Asked Questions</h2>
+            <div class="space-y-6">
+                <div>
+                    <h4 class="text-lg font-bold text-gray-900">How do I purchase a plan?</h4>
+                    <p class="text-gray-600 mt-2">Simply sign up for a free account. Inside your dashboard, navigate to the "Licenses & Billing" tab, select your desired tier, and pay securely via Razorpay to instantly unlock your slots and premium tools.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold text-gray-900">Are the premium tools included for free?</h4>
+                    <p class="text-gray-600 mt-2">Access to specific premium tools (JSON Cleaner, Bank Injector, Cash Sales Generator) depends on your active subscription tier. Upgrading your plan automatically unlocks the corresponding tools in your dashboard.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold text-gray-900">Can I change my registered clients later?</h4>
+                    <p class="text-gray-600 mt-2">No. Once a client GSTIN is locked into a slot, it is permanently registered to your account to prevent license sharing. You will need to upgrade to a higher tier to manage additional clients.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="col-span-1 md:col-span-2">
+                <span class="text-2xl font-bold text-white mb-4 block">Sync<span class="text-teal-500">GST</span></span>
+                <p class="mb-4 max-w-sm">Simplifying taxation, reconciliation, and ledger management for professionals.</p>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-4">Quick Links</h4>
+                <ul class="space-y-2">
+                    <li><a href="pricing.html" class="hover:text-white transition-colors">Pricing</a></li>
+                    <li><a href="about-us.html" class="hover:text-white transition-colors">About Us</a></li>
+                    <li><a href="contact.html" class="hover:text-white transition-colors">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-4">Legal</h4>
+                <ul class="space-y-2">
+                    <li><a href="terms.html" class="hover:text-white transition-colors">Terms & Conditions</a></li>
+                    <li><a href="privacy.html" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                    <li><a href="refund.html" class="hover:text-white transition-colors">Refund Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-8 border-t border-gray-800 text-sm text-center md:text-left">
+            &copy; 2026 Sync GST. All rights reserved.
+        </div>
+    </footer>
+</body>
+</html>

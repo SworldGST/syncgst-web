@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Sync GST</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-text {
+            background: linear-gradient(90deg, #2563eb, #14b8a6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 flex flex-col min-h-screen">
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <a href="index.html" class="flex-shrink-0 flex items-center cursor-pointer">
+                    <span class="text-2xl font-bold text-blue-600">Sync<span class="text-teal-500">GST</span></span>
+                </a>
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="index.html" class="text-gray-600 hover:text-blue-600 font-medium">Home</a>
+                    <a href="index.html#premium-tools" class="text-gray-600 hover:text-blue-600 font-medium">Premium Tools</a>
+                    <a href="index.html#free-tools" class="text-gray-600 hover:text-blue-600 font-medium">Free Tools</a>
+                    <a href="pricing.html" class="text-gray-600 hover:text-blue-600 font-medium">Pricing</a>
+                    <a href="about-us.html" class="text-gray-600 hover:text-blue-600 font-medium">About Us</a>
+                    <a href="contact.html" class="text-blue-600 font-semibold">Contact</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="App/" class="text-blue-600 font-semibold hover:text-blue-800">Log in</a>
+                    <a href="App/" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg font-medium transition-all shadow-md">Sign up for free</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="bg-white py-16 border-b border-gray-100">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight mb-4">
+                Get in <span class="gradient-text">Touch.</span>
+            </h1>
+            <p class="text-lg text-gray-500 leading-relaxed max-w-2xl mx-auto">
+                Whether you have a question about our platform, need technical support, or want to discuss enterprise pricing, our team is here to help.
+            </p>
+        </div>
+    </section>
+
+    <!-- Main Contact Section -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 w-full">
+        <div class="flex flex-col lg:flex-row gap-12 lg:gap-20">
+            
+            <!-- Contact Form -->
+            <div class="lg:w-3/5">
+                <div class="bg-white p-8 md:p-10 rounded-3xl shadow-sm border border-gray-200">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6">Send us a message</h2>
+                    <form action="https://formsubmit.co/contact@syncgst.in" method="POST" class="space-y-6">
+                        <input type="hidden" name="_template" value="table">
+                        <input type="hidden" name="_captcha" value="false">
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="firstName" class="block text-sm font-semibold text-gray-700 mb-2">First Name</label>
+                                <input type="text" id="firstName" name="First Name" required class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none transition-all bg-gray-50 focus:bg-white" placeholder="John">
+                            </div>
+                            <div>
+                                <label for="lastName" class="block text-sm font-semibold text-gray-700 mb-2">Last Name</label>
+                                <input type="text" id="lastName" name="Last Name" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none transition-all bg-gray-50 focus:bg-white" placeholder="Doe">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
+                            <input type="email" id="email" name="Email" required class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none transition-all bg-gray-50 focus:bg-white" placeholder="you@company.com">
+                        </div>
+
+                        <div>
+                            <label for="subject" class="block text-sm font-semibold text-gray-700 mb-2">Subject</label>
+                            <select id="subject" name="_subject" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none transition-all bg-gray-50 focus:bg-white text-gray-700" required>
+                                <option value="General Inquiry">General Inquiry</option>
+                                <option value="Technical Support">Technical Support</option>
+                                <option value="Billing & Pricing">Billing & Pricing</option>
+                                <option value="Product Feedback">Product Feedback</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="message" class="block text-sm font-semibold text-gray-700 mb-2">Message</label>
+                            <textarea id="message" name="Message" rows="5" required class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none transition-all bg-gray-50 focus:bg-white resize-none" placeholder="How can we help you?"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full flex justify-center items-center py-3.5 px-4 border border-transparent rounded-xl shadow-md text-lg font-bold text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="lg:w-2/5 space-y-8">
+                
+                <!-- Direct Contact Cards -->
+                <div class="bg-indigo-50 rounded-3xl p-8 border border-indigo-100">
+                    <h3 class="text-xl font-bold text-gray-900 mb-6">Contact Information</h3>
+                    
+                    <div class="space-y-6">
+                        <!-- Phone -->
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-12 h-12 bg-white text-blue-600 rounded-xl flex items-center justify-center shadow-sm">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-bold text-blue-900 uppercase tracking-wide">Phone & WhatsApp</p>
+                                <p class="text-base text-gray-800 font-semibold mt-1">+91 83196 01616</p>
+                                <p class="text-sm text-gray-500 mt-1">Mon-Sat, 10am to 6pm IST</p>
+                            </div>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-12 h-12 bg-white text-teal-500 rounded-xl flex items-center justify-center shadow-sm">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-bold text-teal-900 uppercase tracking-wide">Email</p>
+                                <p class="text-base text-gray-800 font-semibold mt-1">contact@syncgst.in</p>
+                                <p class="text-sm text-gray-500 mt-1">We aim to reply within 24 hours.</p>
+                            </div>
+                        </div>
+
+                        <!-- Location -->
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-12 h-12 bg-white text-indigo-500 rounded-xl flex items-center justify-center shadow-sm">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.243-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-bold text-indigo-900 uppercase tracking-wide">Headquarters</p>
+                                <p class="text-base text-gray-800 font-semibold mt-1">S World The Complete Accounting Solution</p>
+                                <p class="text-sm text-gray-600 mt-1 leading-relaxed">Swarn Engineering Gali, Near Jhulelal Dharamshala,<br>Balaghat. 481001</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Support Box -->
+                <div class="bg-gray-900 rounded-3xl p-8 text-white text-center shadow-lg">
+                    <h3 class="text-xl font-bold mb-3">Looking for your dashboard?</h3>
+                    <p class="text-gray-400 mb-6 text-sm leading-relaxed">If you are an existing user looking to access your automated ledgers and settings, log in directly to the cloud application.</p>
+                    <a href="App/" class="inline-block w-full bg-white text-gray-900 font-bold py-3.5 px-4 rounded-xl hover:bg-gray-100 transition-colors shadow-sm">
+                        Go to Dashboard
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-12 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="col-span-1 md:col-span-2">
+                <span class="text-2xl font-bold text-white mb-4 block">Sync<span class="text-teal-500">GST</span></span>
+                <p class="mb-4 max-w-sm">Simplifying taxation, reconciliation, and ledger management for professionals.</p>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-4">Quick Links</h4>
+                <ul class="space-y-2">
+                    <li><a href="pricing.html" class="hover:text-white transition-colors">Pricing</a></li>
+                    <li><a href="about-us.html" class="hover:text-white transition-colors">About Us</a></li>
+                    <li><a href="contact.html" class="hover:text-white transition-colors">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-4">Legal</h4>
+                <ul class="space-y-2">
+                    <li><a href="terms.html" class="hover:text-white transition-colors">Terms & Conditions</a></li>
+                    <li><a href="privacy.html" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                    <li><a href="refund.html" class="hover:text-white transition-colors">Refund Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-8 border-t border-gray-800 text-sm text-center md:text-left">
+            &copy; 2026 Sync GST. All rights reserved.
+        </div>
+    </footer>
+</body>
+</html>
