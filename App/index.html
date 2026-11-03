@@ -213,15 +213,7 @@
             </div>
             <h3 class="text-lg font-bold text-gray-900 mb-2">Cash Sales Generator</h3>
             
-            <div class="mb-2">
-                <label class="block mb-1 text-[10px] font-bold text-gray-500 uppercase">Generation Mode</label>
-                <select id="cashMode" onchange="toggleCashMode()" class="input-glass w-full px-2 py-1.5 rounded-lg text-xs font-semibold">
-                    <option value="monthly">Full Month Spread</option>
-                    <option value="daily">Specific Custom Date</option>
-                </select>
-            </div>
-
-            <div id="cashMonthlyDiv" class="grid grid-cols-2 gap-2 mb-2">
+            <div class="grid grid-cols-2 gap-2 mb-2">
                 <div>
                     <label class="block mb-1 text-[10px] font-bold text-gray-500 uppercase">Year</label>
                     <input type="number" id="cashYear" value="2026" class="input-glass w-full px-2 py-1.5 rounded-lg text-xs font-semibold">
@@ -237,11 +229,6 @@
                 </div>
             </div>
 
-            <div id="cashDailyDiv" class="hidden mb-2">
-                <label class="block mb-1 text-[10px] font-bold text-gray-500 uppercase">Specific Date</label>
-                <input type="date" id="cashCustomDate" class="input-glass w-full px-2 py-1.5 rounded-lg text-xs font-semibold">
-            </div>
-
             <div class="grid grid-cols-2 gap-2 mb-2">
                 <div>
                     <label class="block mb-1 text-[10px] font-bold text-gray-500 uppercase">Vch Type</label>
@@ -255,46 +242,7 @@
             
             <div class="mb-2">
                 <label class="block mb-1 text-[10px] font-bold text-gray-500 uppercase">Buyer State</label>
-                <select id="cashState" class="input-glass w-full px-2 py-1.5 rounded-lg text-xs font-semibold">
-                    <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
-                    <option value="Andhra Pradesh">Andhra Pradesh</option>
-                    <option value="Arunachal Pradesh">Arunachal Pradesh</option>
-                    <option value="Assam">Assam</option>
-                    <option value="Bihar">Bihar</option>
-                    <option value="Chandigarh">Chandigarh</option>
-                    <option value="Chhattisgarh">Chhattisgarh</option>
-                    <option value="Dadra and Nagar Haveli">Dadra and Nagar Haveli</option>
-                    <option value="Daman and Diu">Daman and Diu</option>
-                    <option value="Delhi">Delhi</option>
-                    <option value="Goa">Goa</option>
-                    <option value="Gujarat">Gujarat</option>
-                    <option value="Haryana">Haryana</option>
-                    <option value="Himachal Pradesh">Himachal Pradesh</option>
-                    <option value="Jammu and Kashmir">Jammu and Kashmir</option>
-                    <option value="Jharkhand">Jharkhand</option>
-                    <option value="Karnataka">Karnataka</option>
-                    <option value="Kerala">Kerala</option>
-                    <option value="Ladakh">Ladakh</option>
-                    <option value="Lakshadweep">Lakshadweep</option>
-                    <option value="Madhya Pradesh" selected>Madhya Pradesh</option>
-                    <option value="Maharashtra">Maharashtra</option>
-                    <option value="Manipur">Manipur</option>
-                    <option value="Meghalaya">Meghalaya</option>
-                    <option value="Mizoram">Mizoram</option>
-                    <option value="Nagaland">Nagaland</option>
-                    <option value="Odisha">Odisha</option>
-                    <option value="Other Territory">Other Territory</option>
-                    <option value="Puducherry">Puducherry</option>
-                    <option value="Punjab">Punjab</option>
-                    <option value="Rajasthan">Rajasthan</option>
-                    <option value="Sikkim">Sikkim</option>
-                    <option value="Tamil Nadu">Tamil Nadu</option>
-                    <option value="Telangana">Telangana</option>
-                    <option value="Tripura">Tripura</option>
-                    <option value="Uttar Pradesh">Uttar Pradesh</option>
-                    <option value="Uttarakhand">Uttarakhand</option>
-                    <option value="West Bengal">West Bengal</option>
-                </select>
+                <input type="text" id="cashState" value="Madhya Pradesh" class="input-glass w-full px-2 py-1.5 rounded-lg text-xs font-semibold">
             </div>
 
             <div class="grid grid-cols-3 gap-2 mb-4">
@@ -314,6 +262,28 @@
 
             <button onclick="processCashSales()" class="w-full mt-auto bg-purple-600 hover:bg-purple-700 text-white font-bold py-2.5 rounded-xl shadow-md transition-colors text-sm">Generate & Inject Sales</button>
         </div>
+
+        <!-- 4. E-Invoice to Tally Importer -->
+        <div class="relative bg-white/80 border border-white p-6 rounded-2xl shadow-sm flex flex-col h-full">
+            <div id="lock-tool-einvoice" class="absolute inset-0 bg-white/70 backdrop-blur-[2px] z-10 flex flex-col items-center justify-center rounded-2xl transition-all">
+                <span class="text-3xl mb-2">🔒</span>
+                <p class="text-xs font-bold text-gray-800 uppercase tracking-wide">Requires Enterprise Plan</p>
+                <button onclick="switchTab('billing')" class="mt-3 text-[10px] bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-1.5 rounded-lg shadow-sm font-bold uppercase tracking-wider">Upgrade</button>
+            </div>
+
+            <div class="w-10 h-10 bg-orange-100 text-orange-600 rounded-lg flex items-center justify-center mb-4">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+            </div>
+            <h3 class="text-lg font-bold text-gray-900 mb-2">E-Invoice Importer</h3>
+            <p class="text-xs text-gray-600 mb-4 flex-grow">Decode NIC SignedInvoice JSONs and dynamically map masters before direct Tally injection.</p>
+            
+            <label class="block mb-1 text-[10px] font-bold text-gray-500 uppercase tracking-wide">Signed JSON File</label>
+            <input type="file" id="einvoiceFile" accept=".json" class="block w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100 border border-gray-200 rounded-lg p-1 mb-4 bg-white">
+            
+            <button onclick="if(typeof window.processEInvoice === 'function'){window.processEInvoice();}else{alert('Security Block: Please log in to unlock the injection engine.');}" class="w-full mt-auto bg-orange-600 hover:bg-orange-700 text-white font-bold py-2.5 rounded-xl shadow-md transition-colors text-sm">Process Invoice</button>
+        </div>
+      </div>
+    </div>
 
     <!-- LICENSES & BILLING -->
     <div id="view-billing" class="hidden">
@@ -921,29 +891,13 @@
         reader.readAsArrayBuffer(file);
     }
 
-    window.toggleCashMode = function() {
-        const mode = document.getElementById("cashMode").value;
-        if (mode === "daily") {
-            document.getElementById("cashMonthlyDiv").classList.add("hidden");
-            document.getElementById("cashDailyDiv").classList.remove("hidden");
-        } else {
-            document.getElementById("cashMonthlyDiv").classList.remove("hidden");
-            document.getElementById("cashDailyDiv").classList.add("hidden");
-        }
-    };
-
     async function processCashSales() {
         if (typeof window.executeCashSalesSync !== "function") {
             return alert("Security Block: Please log in to unlock the injection engine.");
         }
 
-        const mode = document.getElementById("cashMode") ? document.getElementById("cashMode").value : "monthly";
         const year = parseInt(document.getElementById("cashYear").value) || new Date().getFullYear();
         const month = parseInt(document.getElementById("cashMonth").value);
-        const customDate = document.getElementById("cashCustomDate") ? document.getElementById("cashCustomDate").value : "";
-        
-        if (mode === "daily" && !customDate) return alert("Please select a specific date.");
-
         const rows = parseInt(document.getElementById("cashRows").value);
         const vchType = document.getElementById("cashVchType").value.trim() || "Cash Sales";
         const state = document.getElementById("cashState").value.trim() || "Madhya Pradesh";
@@ -956,7 +910,7 @@
         if (rows <= 0) return alert("Please enter a valid number of vouchers.");
         if (val0 === 0 && val5 === 0 && val18 === 0) return alert("Please enter at least one sales value.");
 
-        await window.executeCashSalesSync(mode, year, month, customDate, rows, vchType, state, val0, val5, val18, userLedgers || {}, port);
+        await window.executeCashSalesSync(year, month, rows, vchType, state, val0, val5, val18, userLedgers || {}, port);
     }
 
     async function loadDashboardData(token) {
